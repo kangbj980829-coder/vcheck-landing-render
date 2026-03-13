@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V-Check AI — 베트남 진출, 데이터로 먼저 확인하세요</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:        #C8392B;
+  --red-dim:    rgba(200,57,43,0.15);
+  --gold:       #B8960C;
+  --ink:        #0f0d0b;
+  --ink-2:      #1a1612;
+  --ink-mid:    #4a4440;
+  --ink-light:  #8a8480;
+  --paper:      #FAF8F5;
+  --paper-dark: #F0EDE8;
+  --border:     #DDD8D0;
+  --go:         #1a7a4a;
+  --go-bg:      #eaf5ef;
+  --white:      #ffffff;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  line-height: 1.7;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ── UTILS ── */
+.mono { font-family: 'DM Mono', monospace; }
+.serif { font-family: 'Noto Serif KR', serif; }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ════════════════════════════
+   NAV
+════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15,13,11,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-mark {
+  width: 28px; height: 28px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: white; font-weight: 500;
+}
+
+.nav-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 3px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: white;
+  background: var(--red);
+  border: none;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.nav-cta:hover { background: #a82e22; }
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  padding: 140px 60px 80px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 배경 그리드 */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* 배경 대형 텍스트 */
+.hero-bg-text {
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 220px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.025);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -8px;
+}
+
+/* 빨간 어센트 라인 */
+.hero-accent-line {
+  width: 48px; height: 3px;
+  background: var(--red);
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.15;
+  color: white;
+  max-width: 780px;
+  margin-bottom: 24px;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--red);
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  line-height: 1.8;
+  margin-bottom: 44px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: white;
+  border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 16px 36px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.15s, transform 0.15s;
+}
+.btn-primary:hover { background: #a82e22; transform: translateY(-1px); }
+
+.btn-ghost {
+  color: rgba(255,255,255,0.5);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.15s;
+}
+.btn-ghost:hover { color: white; }
+
+.hero-timer {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.5px;
+}
+
+.timer-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--go);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ── 히어로 하단 스크롤 인디케이터 */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+}
+
+.scroll-line {
+  width: 40px; height: 1px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.5);
+  animation: scan 2s ease-in-out infinite;
+}
+@keyframes scan {
+  to { left: 100%; }
+}
+
+/* ════════════════════════════
+   PAIN SECTION
+════════════════════════════ */
+.pain-section {
+  background: #141210;
+  padding: 100px 60px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--red);
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 52px;
+  align-items: start;
+}
+
+.pain-headline {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: white;
+}
+
+.pain-headline em {
+  font-style: normal;
+  color: rgba(255,255,255,0.35);
+  display: block;
+  font-size: 0.75em;
+  font-weight: 400;
+  margin-top: 12px;
+  line-height: 1.7;
+}
+
+.pain-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pain-list li {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  transition: color 0.2s;
+}
+.pain-list li:hover { color: rgba(255,255,255,0.85); }
+.pain-list li:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+
+.pain-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ════════════════════════════
+   WHAT YOU GET
+════════════════════════════ */
+.what-section {
+  background: var(--ink-2);
+  padding: 100px 60px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.what-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+  align-items: end;
+}
+
+.what-headline {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: white;
+}
+
+.what-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.85;
+}
+
+.report-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.report-section-card {
+  background: var(--ink-2);
+  padding: 28px 22px;
+  transition: background 0.2s;
+  cursor: default;
+}
+.report-section-card:hover { background: #231f1a; }
+
+.rsc-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--red);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.rsc-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.rsc-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+}
+
+.rsc-tag {
+  margin-top: 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 7px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.3);
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+/* ════════════════════════════
+   SAMPLE PREVIEW
+════════════════════════════ */
+.preview-section {
+  background: #0a0907;
+  padding: 100px 60px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+.preview-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.preview-copy h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 700;
+  color: white;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.preview-copy p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.85;
+  margin-bottom: 32px;
+}
+
+.preview-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.preview-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+.preview-badge.active {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-dim);
+}
+
+/* 리포트 모형 카드 */
+.report-mockup {
+  position: relative;
+}
+
+.mockup-card {
+  background: #FAF8F5;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.4);
+  transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+  transition: transform 0.4s ease;
+}
+
+.mockup-card:hover {
+  transform: perspective(1000px) rotateY(-1deg) rotateX(0deg);
+}
+
+.mockup-header {
+  background: #1a1612;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mockup-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mockup-mark {
+  width: 20px; height: 20px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; color: white;
+}
+
+.mockup-brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.5);
+}
+
+.mockup-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,0.25);
+}
+
+.mockup-body { padding: 16px 20px; }
+
+.mockup-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1612;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* 가짜 verdict 바 */
+.mockup-verdict {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.mv-card {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #DDD8D0;
+  background: #FAF8F5;
+}
+
+.mv-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #8a8480;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.mv-value {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a7a4a;
+}
+
+/* 가짜 바 차트 */
+.mockup-chart { margin-bottom: 10px; }
+
+.mc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.mc-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  color: #8a8480;
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.mc-bar-wrap {
+  flex: 1;
+  height: 10px;
+  background: #F0EDE8;
+}
+
+.mc-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+}
+
+.mc-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 6px;
+  color: white;
+}
+
+/* 가짜 섹션 라인들 */
+.mockup-lines { display: flex; flex-direction: column; gap: 5px; }
+.ml { height: 5px; background: #F0EDE8; border-radius: 1px; }
+
+/* blur 오버레이 */
+.mockup-blur {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  background: linear-gradient(to bottom, transparent, #0a0907 85%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 28px;
+  gap: 10px;
+}
+
+.mockup-blur-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+.mockup-blur-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  background: var(--red);
+  border: none;
+  padding: 10px 24px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.mockup-blur-btn:hover { background: #a82e22; }
+
+/* ════════════════════════════
+   HOW IT WORKS
+════════════════════════════ */
+.how-section {
+  background: var(--ink-2);
+  padding: 100px 60px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  margin-top: 56px;
+}
+
+.how-step {
+  background: var(--ink-2);
+  padding: 36px 32px;
+  position: relative;
+}
+
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 48px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.05);
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
+}
+
+.step-icon {
+  font-size: 22px;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.step-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.step-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.8;
+}
+
+.step-time {
+  margin-top: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+/* 단계 연결 화살표 */
+.how-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -14px;
+  top: 36px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.1);
+  z-index: 1;
+}
+
+/* ════════════════════════════
+   STATS BAR
+════════════════════════════ */
+.stats-bar {
+  background: var(--red);
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,0.2);
+}
+
+/* ════════════════════════════
+   CTA FORM SECTION
+════════════════════════════ */
+.cta-section {
+  background: var(--ink);
+  padding: 100px 60px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(200,57,43,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cta-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.cta-headline {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 900;
+  color: white;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.cta-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.8;
+  margin-bottom: 48px;
+}
+
+/* 폼 */
+.cta-form {
+  background: #161310;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 40px;
+  text-align: left;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.form-group.full { grid-column: span 2; }
+
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+}
+
+.form-input,
+.form-select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+}
+
+.form-input::placeholder { color: rgba(255,255,255,0.2); }
+
+.form-input:focus,
+.form-select:focus { border-color: rgba(200,57,43,0.6); }
+
+.form-select option { background: #1a1612; color: white; }
+
+.form-select-wrap {
+  position: relative;
+}
+
+.form-select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.3);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.form-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  padding: 8px 10px;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: all 0.15s;
+}
+
+.form-checkbox-label:hover {
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+}
+
+.form-checkbox-label input[type="checkbox"] {
+  width: 12px; height: 12px;
+  accent-color: var(--red);
+  flex-shrink: 0;
+}
+
+.form-submit {
+  width: 100%;
+  margin-top: 24px;
+  background: var(--red);
+  color: white;
+  border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 18px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.form-submit:hover { background: #a82e22; }
+
+.form-footer-note {
+  margin-top: 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+.tally-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tally-direct-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-align: center;
+}
+.tally-direct-link:hover { color: rgba(255,255,255,0.75); }
+.tally-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.02);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer {
+  background: #0a0907;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-mark {
+  width: 22px; height: 22px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: white;
+}
+
+.footer-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+}
+
+.footer-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .hero { padding: 120px 24px 80px; }
+  .hero-bg-text { font-size: 120px; }
+  .pain-section, .what-section, .preview-section,
+  .how-section, .cta-section { padding: 70px 24px; }
+  .pain-grid, .preview-inner, .what-header { grid-template-columns: 1fr; gap: 36px; }
+  .report-sections-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-steps { grid-template-columns: 1fr; }
+  .how-step::after { display: none; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: span 1; }
+  .form-checkbox-group { grid-template-columns: repeat(2, 1fr); }
+  footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+  .cta-form { padding: 24px; }
+  .scroll-hint { left: 24px; }
+  .beta-bar, .testimonial-bar, .why-section { padding-left: 24px; padding-right: 24px; }
+  .sample-inline-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .footer-center { display: none; }
+}
+
+/* ── 베타 배너 ── */
+.beta-bar {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 60px;
+  display: flex; align-items: center; gap: 14px;
+}
+.beta-badge {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  padding: 3px 8px; background: var(--gold); color: white; text-transform: uppercase; flex-shrink: 0;
+}
+.beta-text { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; }
+
+/* ── 후기 바 ── */
+.testimonial-bar {
+  background: #141210;
+  padding: 36px 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.testi-inner { max-width: 720px; }
+.testi-quote {
+  font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 600;
+  color: rgba(255,255,255,0.75); line-height: 1.8;
+  font-style: italic; margin-bottom: 14px;
+}
+.testi-who {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,0.3); letter-spacing: 0.5px;
+}
+.testi-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+
+/* ── 샘플 인라인 CTA ── */
+.sample-inline-cta {
+  margin-top: 20px; display: flex; align-items: center; gap: 16px;
+  padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sample-inline-label {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,0.3); letter-spacing: 1px; white-space: nowrap;
+}
+.sample-inline-btn {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600;
+  color: white; border: 1px solid rgba(255,255,255,0.25); padding: 9px 20px;
+  text-decoration: none; transition: all 0.15s; white-space: nowrap;
+}
+.sample-inline-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ── 왜 무료인가 ── */
+.why-section {
+  background: #141210;
+  padding: 44px 60px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.why-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+.why-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
+}
+.why-text { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.9; }
+.why-text strong { color: rgba(255,255,255,0.72); font-weight: 500; }
+
+/* ── footer 중앙 정보 ── */
+.footer-center {
+  text-align: center; font-family: 'DM Mono', monospace;
+  font-size: 10px; line-height: 1.8;
+}
+.footer-company { color: rgba(255,255,255,0.35); margin-bottom: 2px; }
+.footer-contact { color: rgba(255,255,255,0.22); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-mark">VC</div>
+    <div class="nav-name">V-Check AI</div>
+  </a>
+  <a class="nav-cta js-open-tally" href="#">무료 진단 받기</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg-text">VN</div>
+  <div class="hero-accent-line reveal"></div>
+  <p class="hero-eyebrow reveal reveal-delay-1">Vietnam Market Intelligence</p>
+  <h1 class="reveal reveal-delay-2">
+    베트남 진출,<br>
+    <em>데이터로 먼저</em><br>
+    확인하세요
+  </h1>
+  <p class="hero-sub reveal reveal-delay-3">
+    제품 정보를 입력하면 현지 시장 온도, 규제·관세, 경쟁 포지션, 타당성 판정까지
+    전문가급 리포트를 5분 안에 이메일로 받아볼 수 있습니다. 무료입니다.
+  </p>
+  <div class="hero-actions reveal reveal-delay-4">
+    <a href="#" class="btn-primary js-open-tally">
+      무료 리포트 받기
+      <span>→</span>
+    </a>
+    <a href="#preview" class="btn-ghost">샘플 리포트 미리보기</a>
+  </div>
+  <div class="hero-timer reveal reveal-delay-4">
+    <div class="timer-dot"></div>
+    입력 후 평균 5분 이내 이메일 수신 · 완전 무료
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ══ PAIN ══ -->
+<section class="pain-section">
+  <div class="section-label">The Problem</div>
+  <div class="pain-grid">
+    <div class="reveal">
+      <h2 class="pain-headline">
+        베트남 진출을 검토하고 있지만,
+        <em>어디서부터 시작해야 할지 막막한 분들을 위한 서비스입니다.</em>
+      </h2>
+    </div>
+    <ul class="pain-list">
+      <li class="reveal reveal-delay-1">
+        <span class="pain-icon">📋</span>
+        <span>컨설팅 비용은 부담스럽고, 인터넷 검색으로 나오는 정보는 너무 단편적입니다.</span>
+      </li>
+      <li class="reveal reveal-delay-2">
+        <span class="pain-icon">🔍</span>
+        <span>관세율, DAV 등록, 현지 가격대를 각각 따로 찾아야 해서 시간이 너무 오래 걸립니다.</span>
+      </li>
+      <li class="reveal reveal-delay-3">
+        <span class="pain-icon">📊</span>
+        <span>시장 조사를 해도 우리 제품이 이 시장에서 통할지 판단하기가 어렵습니다.</span>
+      </li>
+      <li class="reveal reveal-delay-4">
+        <span class="pain-icon">⚠️</span>
+        <span>진출 후 예상 못한 인허가 문제나 규제로 발목이 잡히는 사례를 주변에서 봤습니다.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ WHAT YOU GET ══ -->
+<section class="what-section">
+  <div class="section-label">What You Get</div>
+  <div class="what-header">
+    <h2 class="what-headline reveal">
+      한 번의 입력으로<br>다섯 가지 전문가 분석을<br>한 번에 받습니다
+    </h2>
+    <p class="what-desc reveal reveal-delay-2">
+      단순한 정보 요약이 아닙니다. 실무 컨설턴트 관점에서 데이터를 해석하고,
+      지금 당장 실행 가능한 처방으로 마무리합니다.
+      모든 분석은 공개 데이터 출처와 함께 제공됩니다.
+    </p>
+  </div>
+  <div class="report-sections-grid reveal">
+    <div class="report-section-card">
+      <div class="rsc-num">01</div>
+      <div class="rsc-title">현지 시장 온도</div>
+      <div class="rsc-desc">Shopee·Lazada 기반 경쟁 제품 가격대 및 포지셔닝 공백 분석</div>
+      <span class="rsc-tag">Market Intelligence</span>
+    </div>
+    <div class="report-section-card">
+      <div class="rsc-num">02</div>
+      <div class="rsc-title">규제 및 관세</div>
+      <div class="rsc-desc">HS Code, DAV 인허가 요건, VKFTA 관세 혜택 적용 여부</div>
+      <span class="rsc-tag">Tax · Law</span>
+    </div>
+    <div class="report-section-card">
+      <div class="rsc-num">03</div>
+      <div class="rsc-title">시장 진입 환경</div>
+      <div class="rsc-desc">지금 이 시장이 왜 이 타이밍인지, 진입을 막는 요인은 무엇인지</div>
+      <span class="rsc-tag">Entry Landscape</span>
+    </div>
+    <div class="report-section-card">
+      <div class="rsc-num">04</div>
+      <div class="rsc-title">AI 타당성 판정</div>
+      <div class="rsc-desc">데이터 기반 Go/No-Go 판정 + 핵심 리스크·기회 각 1개</div>
+      <span class="rsc-tag">Go · No-Go</span>
+    </div>
+    <div class="report-section-card" style="background:#1a1612;">
+      <div class="rsc-num" style="color:var(--gold);">05</div>
+      <div class="rsc-title">전문가 처방</div>
+      <div class="rsc-desc">긴급도·중요도별 액션 카드 6개. 지금 당장 무엇부터 해야 하는지</div>
+      <span class="rsc-tag" style="background:rgba(184,150,12,0.1); color:var(--gold);">Next Action</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SAMPLE PREVIEW ══ -->
+<section class="preview-section" id="preview">
+  <div class="section-label">Sample Report</div>
+  <div class="preview-inner">
+    <div class="preview-copy reveal">
+      <h2>실제로 이런 리포트가<br>5분 안에 도착합니다</h2>
+      <p>
+        뷰티·화장품 카테고리 기능성 선크림을 베트남 이커머스(Shopee VN)로
+        진출하는 시나리오 기준 샘플 리포트입니다.
+        데이터 출처, 면책 조항, 액션 플랜까지 실제 발송 버전과 동일합니다.
+      </p>
+      <div class="preview-badges">
+        <span class="preview-badge active">뷰티·화장품</span>
+        <span class="preview-badge">식품·음료</span>
+        <span class="preview-badge">전자·IT기기</span>
+        <span class="preview-badge">의류·섬유</span>
+        <span class="preview-badge">산업재·부품</span>
+      </div>
+      <a href="vcheck_sample_report_dark.html" target="_blank" class="btn-primary">
+        샘플 리포트 전체 보기 →
+      </a>
+      <div class="sample-inline-cta">
+        <span class="sample-inline-label">내 제품으로 바로 받아보기</span>
+        <a href="#" class="sample-inline-btn js-open-tally">무료 진단 신청 →</a>
+      </div>
+    </div>
+
+    <!-- 리포트 목업 카드 -->
+    <div class="report-mockup reveal reveal-delay-2">
+      <div class="mockup-card">
+        <div class="mockup-header">
+          <div class="mockup-brand">
+            <div class="mockup-mark">VC</div>
+            <div class="mockup-brand-name">V-CHECK AI</div>
+          </div>
+          <div class="mockup-meta">VCR-2025-0041</div>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-title">베트남 진출 타당성 진단<br>— 기능성 선크림 (SPF50+)</div>
+
+          <div class="mockup-verdict">
+            <div class="mv-card" style="background:#eaf5ef; border-color:#1a7a4a;">
+              <div class="mv-label">진출 적합도</div>
+              <div class="mv-value">▲ 상 (GO)</div>
+            </div>
+            <div class="mv-card">
+              <div class="mv-label">핵심 기회</div>
+              <div class="mv-value" style="color:#1a1612; font-size:10px;">프리미엄 공백</div>
+            </div>
+            <div class="mv-card">
+              <div class="mv-label">핵심 리스크</div>
+              <div class="mv-value" style="color:#C8392B; font-size:10px;">DAV 인허가</div>
+            </div>
+          </div>
+
+          <div class="mockup-chart">
+            <div class="mc-row">
+              <div class="mc-label">검색량 YoY</div>
+              <div class="mc-bar-wrap">
+                <div class="mc-bar" style="width:43%; background:#1a7a4a;">
+                  <span class="mc-val">+43%</span>
+                </div>
+              </div>
+            </div>
+            <div class="mc-row">
+              <div class="mc-label">성분 신뢰도</div>
+              <div class="mc-bar-wrap">
+                <div class="mc-bar" style="width:68%; background:#2a6ebb;">
+                  <span class="mc-val">68%</span>
+                </div>
+              </div>
+            </div>
+            <div class="mc-row">
+              <div class="mc-label">리뷰 전환율</div>
+              <div class="mc-bar-wrap">
+                <div class="mc-bar" style="width:52%; background:#C8392B;">
+                  <span class="mc-val">2.1x</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mockup-lines">
+            <div class="ml" style="width:90%"></div>
+            <div class="ml" style="width:75%"></div>
+            <div class="ml" style="width:85%"></div>
+            <div class="ml" style="width:60%"></div>
+            <div class="ml" style="width:80%"></div>
+            <div class="ml" style="width:70%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-blur">
+        <div class="mockup-blur-text">전체 내용 보기</div>
+        <a href="vcheck_sample_report_dark.html" target="_blank" class="mockup-blur-btn">샘플 리포트 열기 →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="how-section">
+  <div class="section-label">How It Works</div>
+  <h2 class="reveal" style="font-family:'Noto Serif KR',serif; font-size:clamp(22px,3vw,34px); font-weight:700; color:white; margin-top:16px;">3단계, 5분이면 충분합니다</h2>
+  <div class="how-steps">
+    <div class="how-step reveal">
+      <div class="step-num">01</div>
+      <span class="step-icon">📝</span>
+      <div class="step-title">제품 정보 입력</div>
+      <div class="step-desc">
+        카테고리, 제품명, 목표 채널, 우려 사항을 선택합니다.
+        제품 브로슈어나 URL이 있으면 첨부하면 더 정밀한 분석이 가능합니다.
+      </div>
+      <div class="step-time">약 2분 소요</div>
+    </div>
+    <div class="how-step reveal reveal-delay-2">
+      <div class="step-num">02</div>
+      <span class="step-icon">⚙️</span>
+      <div class="step-title">AI 실시간 분석</div>
+      <div class="step-desc">
+        입력 즉시 베트남 현지 시장 데이터를 수집하고,
+        인사·세무·법률 관점의 전문가급 분석을 자동으로 생성합니다.
+      </div>
+      <div class="step-time">약 3분 소요</div>
+    </div>
+    <div class="how-step reveal reveal-delay-3">
+      <div class="step-num">03</div>
+      <span class="step-icon">📩</span>
+      <div class="step-title">이메일로 수신</div>
+      <div class="step-desc">
+        입력하신 이메일로 PDF 형식의 리포트가 발송됩니다.
+        리포트 내 상담 신청 링크를 통해 전문가 미팅을 예약할 수 있습니다.
+      </div>
+      <div class="step-time">입력 후 평균 5분 이내</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BETA NOTICE + TESTIMONIAL ══ -->
+<div class="beta-bar">
+  <div class="beta-badge">BETA</div>
+  <div class="beta-text">현재 소수 기업 대상 베타 운영 중 · 기간 한정 무료 제공</div>
+</div>
+
+<div class="testimonial-bar">
+  <div class="testi-inner">
+    <div class="testi-quote">"관세율이랑 DAV 등록 요건을 따로 알아보는 데만 2주 걸렸는데, 이 리포트 하나로 방향이 잡혔습니다. 컨설팅 받기 전에 먼저 확인용으로 쓰기 딱 좋습니다."</div>
+    <div class="testi-who">
+      <div class="testi-dot"></div>
+      뷰티 브랜드 대표 · 베타 사용자
+    </div>
+  </div>
+</div>
+
+<!-- ══ WHY FREE ══ -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-label">왜 무료인가요?</div>
+    <p class="why-text">
+      V-Check AI는 베트남 현지 Sales BPO 서비스의 첫 번째 단계입니다.
+      AI 리포트로 방향을 잡은 기업이 실제 파트너 발굴, 현장 검증, 법인 설립까지
+      필요할 때 유료 서비스로 연결됩니다. 리포트는 그 과정의 시작점이기 때문에
+      비용 없이 제공합니다. <strong>입력하신 정보는 리포트 생성 외 목적으로 사용되지 않습니다.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ══ CTA FORM ══ -->
+<section class="cta-section" id="cta-form">
+  <div class="cta-inner">
+    <p class="cta-eyebrow reveal">Free Report</p>
+    <h2 class="cta-headline reveal reveal-delay-1">
+      지금 바로<br>무료 진단을 받아보세요
+    </h2>
+    <p class="cta-sub reveal reveal-delay-2">
+      입력 후 5분 이내, 전문가급 베트남 진출 타당성 리포트를 이메일로 받아볼 수 있습니다.
+    </p>
+
+    <div class="cta-form reveal reveal-delay-3">
+      <div class="tally-actions">
+        <button type="button" class="form-submit js-open-tally">
+          Tally 폼 열기
+          <span>→</span>
+        </button>
+        <a id="tallyDirectLink" class="tally-direct-link" href="https://tally.so/r/lbAx2V" target="_blank" rel="noopener">
+          팝업이 열리지 않으면 새 탭에서 열기
+        </a>
+      </div>
+      <p class="form-footer-note">
+        ※ 입력하신 정보는 리포트 생성 목적으로만 사용되며, 제3자에게 제공되지 않습니다.
+        본 리포트는 AI 분석 기반 참고 자료이며 전문가 확인이 필요합니다.
+      </p>
+      <div class="tally-note">
+        설정 메모: <code>TALLY_CONFIG.formId</code>에 실제 Tally 폼 ID를 입력하세요.
+        모드는 <code>popup</code> 또는 <code>redirect</code>로 전환할 수 있습니다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-mark">VC</div>
+    <div class="footer-name">V-Check AI</div>
+  </div>
+  <div class="footer-center">
+    <div class="footer-company">비비데(VBD) · 베트남 비즈니스 인텔리전스</div>
+    <div class="footer-contact">문의 · <a href="mailto:hello@vbd.kr" style="color:rgba(255,255,255,0.35); text-decoration:underline; text-underline-offset:2px;">hello@vbd.kr</a></div>
+  </div>
+  <div class="footer-note">© 2025 V-Check AI · 본 서비스는 AI 분석 기반 참고 자료를 제공합니다</div>
+</footer>
+
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script>
+  const TALLY_CONFIG = {
+    mode: "popup", // "popup" | "redirect"
+    formId: "lbAx2V",
+    redirectUrl: "https://tally.so/r/lbAx2V",
+  };
+
+  function getTallyUrl() {
+    if (
+      TALLY_CONFIG.redirectUrl &&
+      !TALLY_CONFIG.redirectUrl.includes("YOUR_TALLY_FORM_ID")
+    ) {
+      return TALLY_CONFIG.redirectUrl;
+    }
+    return `https://tally.so/r/${TALLY_CONFIG.formId}`;
+  }
+
+  function getUtmFields() {
+    const params = new URLSearchParams(window.location.search || "");
+    return {
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_content: params.get("utm_content") || "",
+      utm_term: params.get("utm_term") || "",
+    };
+  }
+
+  function openTallyForm() {
+    const tallyUrl = getTallyUrl();
+    const utmFields = getUtmFields();
+
+    if (
+      TALLY_CONFIG.mode === "popup" &&
+      window.Tally &&
+      typeof window.Tally.openPopup === "function" &&
+      TALLY_CONFIG.formId &&
+      !TALLY_CONFIG.formId.includes("YOUR_TALLY_FORM_ID")
+    ) {
+      window.Tally.openPopup(TALLY_CONFIG.formId, {
+        layout: "modal",
+        width: 760,
+        hiddenFields: {
+          source: "vcheck_landing_v4",
+          page_url: window.location.href,
+          referrer: document.referrer || "direct",
+          ...utmFields,
+        },
+      });
+      return;
+    }
+
+    window.location.href = tallyUrl;
+  }
+
+  // 스크롤 리빌 애니메이션
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // 히어로 진입 즉시 애니메이션
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hero .reveal').forEach(el => {
+      el.classList.add('visible');
+    });
+
+    document.querySelectorAll(".js-open-tally").forEach((el) => {
+      el.addEventListener("click", (event) => {
+        event.preventDefault();
+        openTallyForm();
+      });
+    });
+
+    const directLink = document.getElementById("tallyDirectLink");
+    if (directLink) {
+      directLink.href = getTallyUrl();
+    }
+
+    document.querySelectorAll("a.js-open-tally").forEach((el) => {
+      el.setAttribute("href", getTallyUrl());
+    });
+  });
+
+  window.addEventListener("load", () => {
+    if (TALLY_CONFIG.mode !== "popup") {
+      return;
+    }
+
+    if (!window.Tally || typeof window.Tally.openPopup !== "function") {
+      console.warn("[V-Check] Tally popup script is not ready. Redirect fallback will be used.");
+    } else if (
+      !TALLY_CONFIG.formId ||
+      TALLY_CONFIG.formId.includes("YOUR_TALLY_FORM_ID")
+    ) {
+      console.warn("[V-Check] TALLY_CONFIG.formId is not set. Update it before production.");
+    }
+  });
+</script>
+
+</body>
+</html>
