@@ -1019,21 +1019,58 @@ nav {
 .quick-status.error { color: #ff9f95; }
 .quick-status.pending { color: #e9cf7a; }
 .quick-report {
-  margin-top: 16px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.02);
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(6,6,6,0.78);
+  backdrop-filter: blur(2px);
+}
+.quick-report[hidden] {
+  display: none !important;
+}
+.quick-modal-dialog {
+  width: min(860px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: #161310;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.55);
   padding: 16px;
+}
+.quick-modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.quick-modal-close {
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.7px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+.quick-modal-close:hover {
+  border-color: rgba(255,255,255,0.4);
 }
 .quick-report-head {
   font-family: 'Noto Serif KR', serif;
   font-size: 17px;
   font-weight: 700;
   color: white;
-  margin-bottom: 12px;
+  margin: 0;
 }
 .quick-report-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 .quick-card {
@@ -1064,6 +1101,25 @@ nav {
 }
 .quick-empty {
   color: rgba(255,255,255,0.38);
+}
+.quick-modal-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+.quick-modal-cta {
+  border: none;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+.quick-modal-cta:hover {
+  background: #a82e22;
 }
 .detail-stage {
   margin-top: 18px;
@@ -1182,7 +1238,9 @@ footer {
   .footer-center { display: none; }
   .tally-inline-frame { min-height: 840px; }
   .quick-check-panel { padding: 14px; }
-  .quick-report { padding: 12px; }
+  .quick-report { padding: 16px; }
+  .quick-modal-dialog { max-height: 84vh; padding: 12px; }
+  .quick-report-grid { grid-template-columns: 1fr; }
   .detail-stage-head { font-size: 16px; }
 }
 
@@ -1577,27 +1635,37 @@ footer {
       </div>
 
       <div class="quick-report" id="quickReport" hidden>
-        <div class="quick-report-head">AI 간략 리포트 (초안)</div>
-        <div class="quick-report-grid">
-          <div class="quick-card">
-            <div class="quick-card-title">핵심 요약</div>
-            <div id="quickSummary" class="quick-card-body quick-empty">아직 분석 결과가 없습니다.</div>
+        <div class="quick-modal-dialog" role="dialog" aria-modal="true" aria-label="PDF 빠른 분석 결과">
+          <div class="quick-modal-top">
+            <div class="quick-report-head">AI 간략 리포트 (초안)</div>
+            <button type="button" id="quickReportCloseBtn" class="quick-modal-close">닫기</button>
           </div>
-          <div class="quick-card">
-            <div class="quick-card-title">강점</div>
-            <ul id="quickStrengths" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
+          <div class="quick-report-grid">
+            <div class="quick-card">
+              <div class="quick-card-title">핵심 요약</div>
+              <div id="quickSummary" class="quick-card-body quick-empty">아직 분석 결과가 없습니다.</div>
+            </div>
+            <div class="quick-card">
+              <div class="quick-card-title">강점</div>
+              <ul id="quickStrengths" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
+            </div>
+            <div class="quick-card">
+              <div class="quick-card-title">약점</div>
+              <ul id="quickWeaknesses" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
+            </div>
+            <div class="quick-card">
+              <div class="quick-card-title">기회</div>
+              <ul id="quickOpportunities" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
+            </div>
+            <div class="quick-card">
+              <div class="quick-card-title">리스크</div>
+              <ul id="quickRisks" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
+            </div>
           </div>
-          <div class="quick-card">
-            <div class="quick-card-title">약점</div>
-            <ul id="quickWeaknesses" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
-          </div>
-          <div class="quick-card">
-            <div class="quick-card-title">기회</div>
-            <ul id="quickOpportunities" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
-          </div>
-          <div class="quick-card">
-            <div class="quick-card-title">리스크</div>
-            <ul id="quickRisks" class="quick-list"><li class="quick-empty">분석 대기 중</li></ul>
+          <div class="quick-modal-actions">
+            <button type="button" id="quickReportGoDetailBtn" class="quick-modal-cta">
+              상세 리포트 받기
+            </button>
           </div>
         </div>
       </div>
@@ -1671,7 +1739,7 @@ footer {
   };
   const STEP_TEXT = {
     pending: "PDF를 분석 중입니다. 잠시만 기다려 주세요.",
-    success: "간략 분석이 완료되었습니다. 아래 2단계 폼에서 상세 리포트를 신청하세요.",
+    success: "간략 분석이 완료되었습니다. 팝업 결과를 확인해 주세요.",
     fallback: "빠른 분석 서버가 아직 연결되지 않아 2단계 폼으로 바로 안내합니다.",
   };
 
@@ -1747,7 +1815,24 @@ footer {
     renderList("quickWeaknesses", payload.weaknesses || payload.weak_points);
     renderList("quickOpportunities", payload.opportunities || payload.chances);
     renderList("quickRisks", payload.risks || payload.threats);
+  }
+
+  function openQuickReportModal() {
+    const box = document.getElementById("quickReport");
+    if (!box) return;
     box.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeQuickReportModal({ revealDetail = true, scrollToDetail = false } = {}) {
+    const box = document.getElementById("quickReport");
+    if (box) {
+      box.hidden = true;
+    }
+    document.body.style.overflow = "";
+    if (revealDetail) {
+      revealDetailStage(scrollToDetail);
+    }
   }
 
   function setQuickStatus(type, message) {
@@ -1787,7 +1872,7 @@ footer {
     return buildTallyUrl(base, extraFields);
   }
 
-  function revealDetailStage() {
+  function revealDetailStage(scrollToStage = false) {
     const detailStage = document.getElementById("detailStage");
     const hint = document.getElementById("detailStageHint");
     const directLink = document.getElementById("tallyDirectLink");
@@ -1807,6 +1892,9 @@ footer {
 
     detailStage.hidden = false;
     if (hint) hint.hidden = true;
+    if (scrollToStage) {
+      detailStage.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
     if (window.Tally && typeof window.Tally.loadEmbeds === "function") {
       window.Tally.loadEmbeds();
@@ -1838,6 +1926,33 @@ footer {
         event.preventDefault();
         ctaSection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
+    });
+
+    const quickReport = document.getElementById("quickReport");
+    const quickReportCloseBtn = document.getElementById("quickReportCloseBtn");
+    const quickReportGoDetailBtn = document.getElementById("quickReportGoDetailBtn");
+
+    if (quickReportCloseBtn) {
+      quickReportCloseBtn.addEventListener("click", () => {
+        closeQuickReportModal({ revealDetail: true, scrollToDetail: false });
+      });
+    }
+    if (quickReportGoDetailBtn) {
+      quickReportGoDetailBtn.addEventListener("click", () => {
+        closeQuickReportModal({ revealDetail: true, scrollToDetail: true });
+      });
+    }
+    if (quickReport) {
+      quickReport.addEventListener("click", (event) => {
+        if (event.target === quickReport) {
+          closeQuickReportModal({ revealDetail: true, scrollToDetail: false });
+        }
+      });
+    }
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && quickReport && !quickReport.hidden) {
+        closeQuickReportModal({ revealDetail: true, scrollToDetail: false });
+      }
     });
 
     const fileInput = document.getElementById("productPdfInput");
@@ -1907,7 +2022,7 @@ footer {
 
         renderQuickReport(payload);
         setQuickStatus("success", STEP_TEXT.success);
-        revealDetailStage();
+        openQuickReportModal();
       } catch (error) {
         const message =
           error && error.name === "AbortError"
