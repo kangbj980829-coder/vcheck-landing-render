@@ -971,30 +971,6 @@ nav {
   flex-direction: column;
   gap: 14px;
 }
-.stage-flow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 18px;
-}
-.stage-pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 6px 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.6px;
-  color: rgba(255,255,255,0.55);
-  text-align: center;
-}
-.stage-pill-active {
-  border-color: rgba(200,57,43,0.45);
-  background: rgba(200,57,43,0.15);
-  color: rgba(255,255,255,0.85);
-}
 .quick-check-panel {
   border: 1px solid rgba(255,255,255,0.1);
   background: rgba(255,255,255,0.02);
@@ -1208,7 +1184,6 @@ footer {
   .quick-check-panel { padding: 14px; }
   .quick-report { padding: 12px; }
   .detail-stage-head { font-size: 16px; }
-  .stage-flow { grid-template-columns: 1fr; gap: 10px; }
 }
 
 /* ── 베타 배너 ── */
@@ -1584,11 +1559,6 @@ footer {
     </p>
 
     <div class="cta-form reveal reveal-delay-3">
-      <div class="stage-flow">
-        <div class="stage-pill stage-pill-active">1단계 · PDF 빠른 진단</div>
-        <div class="stage-pill">2단계 · 추가 정보 입력</div>
-      </div>
-
       <div class="quick-check-panel" id="quickCheckPanel">
         <label class="quick-label" for="productPdfInput">제품소개 PDF 업로드</label>
         <p class="quick-help">
@@ -1702,7 +1672,7 @@ footer {
   const STEP_TEXT = {
     pending: "PDF를 분석 중입니다. 잠시만 기다려 주세요.",
     success: "간략 분석이 완료되었습니다. 아래 2단계 폼에서 상세 리포트를 신청하세요.",
-    fallback: "빠른 분석 엔드포인트가 아직 준비되지 않아 2단계 폼으로 바로 안내합니다.",
+    fallback: "빠른 분석 서버가 아직 연결되지 않아 2단계 폼으로 바로 안내합니다.",
   };
 
   let currentSubmissionId = "";
@@ -1900,7 +1870,7 @@ footer {
 
       const webhookUrl = QUICK_CHECK_CONFIG.webhookUrl || "";
       if (!webhookUrl.startsWith("https://")) {
-        setQuickStatus("error", STEP_TEXT.fallback);
+        setQuickStatus("pending", STEP_TEXT.fallback);
         revealDetailStage();
         submitBtn.disabled = false;
         return;
