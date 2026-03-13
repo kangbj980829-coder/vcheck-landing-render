@@ -971,6 +971,15 @@ nav {
   flex-direction: column;
   gap: 14px;
 }
+.tally-inline-wrap {
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.02);
+}
+.tally-inline-frame {
+  display: block;
+  width: 100%;
+  min-height: 760px;
+}
 .tally-direct-link {
   font-family: 'DM Mono', monospace;
   font-size: 11px;
@@ -1053,6 +1062,7 @@ footer {
   .beta-bar, .testimonial-bar, .why-section { padding-left: 24px; padding-right: 24px; }
   .sample-inline-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
   .footer-center { display: none; }
+  .tally-inline-frame { min-height: 840px; }
 }
 
 /* ── 베타 배너 ── */
@@ -1136,7 +1146,7 @@ footer {
     <div class="nav-mark">VC</div>
     <div class="nav-name">V-Check AI</div>
   </a>
-  <a class="nav-cta js-open-tally" href="#">무료 진단 받기</a>
+  <a class="nav-cta js-open-tally" href="#cta-form">무료 진단 받기</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -1154,7 +1164,7 @@ footer {
     전문가급 리포트를 5분 안에 이메일로 받아볼 수 있습니다. 무료입니다.
   </p>
   <div class="hero-actions reveal reveal-delay-4">
-    <a href="#" class="btn-primary js-open-tally">
+    <a href="#cta-form" class="btn-primary js-open-tally">
       무료 리포트 받기
       <span>→</span>
     </a>
@@ -1271,7 +1281,7 @@ footer {
       </a>
       <div class="sample-inline-cta">
         <span class="sample-inline-label">내 제품으로 바로 받아보기</span>
-        <a href="#" class="sample-inline-btn js-open-tally">무료 진단 신청 →</a>
+        <a href="#cta-form" class="sample-inline-btn js-open-tally">무료 진단 신청 →</a>
       </div>
     </div>
 
@@ -1429,12 +1439,22 @@ footer {
 
     <div class="cta-form reveal reveal-delay-3">
       <div class="tally-actions">
-        <button type="button" class="form-submit js-open-tally">
-          Tally 폼 열기
-          <span>→</span>
-        </button>
+        <div class="tally-inline-wrap">
+          <iframe
+            id="tallyInlineFrame"
+            class="tally-inline-frame"
+            title="V-Check 무료 진단 폼"
+            data-tally-src=""
+            loading="lazy"
+            width="100%"
+            height="760"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0">
+          </iframe>
+        </div>
         <a id="tallyDirectLink" class="tally-direct-link" href="https://tally.so/r/lbAx2V" target="_blank" rel="noopener">
-          팝업이 열리지 않으면 새 탭에서 열기
+          폼이 보이지 않으면 새 탭에서 작성하기
         </a>
       </div>
       <p class="form-footer-note">
@@ -1442,8 +1462,7 @@ footer {
         본 리포트는 AI 분석 기반 참고 자료이며 전문가 확인이 필요합니다.
       </p>
       <div class="tally-note">
-        설정 메모: <code>TALLY_CONFIG.formId</code>에 실제 Tally 폼 ID를 입력하세요.
-        모드는 <code>popup</code> 또는 <code>redirect</code>로 전환할 수 있습니다.
+        이 페이지에서 바로 입력하면 자동으로 리포트 생성이 시작됩니다.
       </div>
     </div>
   </div>
@@ -1465,24 +1484,17 @@ footer {
 <script async src="https://tally.so/widgets/embed.js"></script>
 <script>
   const TALLY_CONFIG = {
-    mode: "popup", // "popup" | "redirect"
     formId: "lbAx2V",
-    redirectUrl: "https://tally.so/r/lbAx2V",
+    embedUrl: "https://tally.so/embed/lbAx2V",
+    fallbackUrl: "https://tally.so/r/lbAx2V",
   };
 
-  function getTallyUrl() {
-    if (
-      TALLY_CONFIG.redirectUrl &&
-      !TALLY_CONFIG.redirectUrl.includes("YOUR_TALLY_FORM_ID")
-    ) {
-      return TALLY_CONFIG.redirectUrl;
-    }
-    return `https://tally.so/r/${TALLY_CONFIG.formId}`;
-  }
-
-  function getUtmFields() {
+  function getTrackingFields() {
     const params = new URLSearchParams(window.location.search || "");
     return {
+      source: "vcheck_landing_v4",
+      page_url: window.location.href,
+      referrer: document.referrer || "direct",
       utm_source: params.get("utm_source") || "",
       utm_medium: params.get("utm_medium") || "",
       utm_campaign: params.get("utm_campaign") || "",
@@ -1491,31 +1503,34 @@ footer {
     };
   }
 
-  function openTallyForm() {
-    const tallyUrl = getTallyUrl();
-    const utmFields = getUtmFields();
+  function buildTallyUrl(baseUrl) {
+    const url = new URL(baseUrl);
+    const fields = getTrackingFields();
+    Object.entries(fields).forEach(([key, value]) => {
+      if (!value) return;
+      url.searchParams.set(key, value);
+    });
+    return url.toString();
+  }
 
-    if (
-      TALLY_CONFIG.mode === "popup" &&
-      window.Tally &&
-      typeof window.Tally.openPopup === "function" &&
-      TALLY_CONFIG.formId &&
-      !TALLY_CONFIG.formId.includes("YOUR_TALLY_FORM_ID")
-    ) {
-      window.Tally.openPopup(TALLY_CONFIG.formId, {
-        layout: "modal",
-        width: 760,
-        hiddenFields: {
-          source: "vcheck_landing_v4",
-          page_url: window.location.href,
-          referrer: document.referrer || "direct",
-          ...utmFields,
-        },
-      });
-      return;
-    }
+  function getTallyEmbedUrl() {
+    const base = TALLY_CONFIG.embedUrl || `https://tally.so/embed/${TALLY_CONFIG.formId}`;
+    const url = new URL(base);
+    url.searchParams.set("alignLeft", "1");
+    url.searchParams.set("hideTitle", "1");
+    url.searchParams.set("transparentBackground", "1");
+    url.searchParams.set("dynamicHeight", "1");
+    const fields = getTrackingFields();
+    Object.entries(fields).forEach(([key, value]) => {
+      if (!value) return;
+      url.searchParams.set(key, value);
+    });
+    return url.toString();
+  }
 
-    window.location.href = tallyUrl;
+  function getTallyDirectUrl() {
+    const base = TALLY_CONFIG.fallbackUrl || `https://tally.so/r/${TALLY_CONFIG.formId}`;
+    return buildTallyUrl(base);
   }
 
   // 스크롤 리빌 애니메이션
@@ -1536,35 +1551,29 @@ footer {
       el.classList.add('visible');
     });
 
+    const ctaSection = document.getElementById("cta-form");
     document.querySelectorAll(".js-open-tally").forEach((el) => {
       el.addEventListener("click", (event) => {
+        if (!ctaSection) return;
         event.preventDefault();
-        openTallyForm();
+        ctaSection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
 
     const directLink = document.getElementById("tallyDirectLink");
     if (directLink) {
-      directLink.href = getTallyUrl();
+      directLink.href = getTallyDirectUrl();
     }
 
-    document.querySelectorAll("a.js-open-tally").forEach((el) => {
-      el.setAttribute("href", getTallyUrl());
-    });
-  });
-
-  window.addEventListener("load", () => {
-    if (TALLY_CONFIG.mode !== "popup") {
-      return;
+    const tallyInlineFrame = document.getElementById("tallyInlineFrame");
+    if (tallyInlineFrame) {
+      const embedUrl = getTallyEmbedUrl();
+      tallyInlineFrame.setAttribute("data-tally-src", embedUrl);
+      tallyInlineFrame.setAttribute("src", embedUrl);
     }
 
-    if (!window.Tally || typeof window.Tally.openPopup !== "function") {
-      console.warn("[V-Check] Tally popup script is not ready. Redirect fallback will be used.");
-    } else if (
-      !TALLY_CONFIG.formId ||
-      TALLY_CONFIG.formId.includes("YOUR_TALLY_FORM_ID")
-    ) {
-      console.warn("[V-Check] TALLY_CONFIG.formId is not set. Update it before production.");
+    if (window.Tally && typeof window.Tally.loadEmbeds === "function") {
+      window.Tally.loadEmbeds();
     }
   });
 </script>
