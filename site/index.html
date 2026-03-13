@@ -972,18 +972,23 @@ nav {
   gap: 14px;
 }
 .stage-flow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
 }
 .stage-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
   border: 1px solid rgba(255,255,255,0.15);
   padding: 6px 10px;
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.6px;
   color: rgba(255,255,255,0.55);
+  text-align: center;
 }
 .stage-pill-active {
   border-color: rgba(200,57,43,0.45);
@@ -1203,6 +1208,7 @@ footer {
   .quick-check-panel { padding: 14px; }
   .quick-report { padding: 12px; }
   .detail-stage-head { font-size: 16px; }
+  .stage-flow { grid-template-columns: 1fr; gap: 10px; }
 }
 
 /* ── 베타 배너 ── */
@@ -1691,7 +1697,7 @@ footer {
     // n8n 신규 워크플로 endpoint를 입력하세요. 예: https://<n8n-domain>/webhook/<workflow-id>/pdfquick/v1
     webhookUrl: "",
     requestTimeoutMs: 120000,
-    maxFileSizeMb: 20,
+    maxFileSizeMb: 100,
   };
   const STEP_TEXT = {
     pending: "PDF를 분석 중입니다. 잠시만 기다려 주세요.",
