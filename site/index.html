@@ -1804,7 +1804,7 @@ footer {
 </footer>
 
 <script async src="https://tally.so/widgets/embed.js"></script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" async defer></script>
 <script>
   const TALLY_CONFIG = {
     formId: "lbAx2V",
@@ -2239,11 +2239,15 @@ footer {
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+  // Turnstile onload callback — called by Cloudflare SDK when ready
+  window.onTurnstileLoad = function() {
+    initTurnstileWidget();
+  };
+
   // 히어로 진입 즉시 애니메이션
   document.addEventListener('DOMContentLoaded', () => {
+    // Attempt init here in case SDK loaded before DOMContentLoaded
     initTurnstileWidget();
-    setTimeout(initTurnstileWidget, 600);
-    setTimeout(initTurnstileWidget, 1400);
 
     document.querySelectorAll('.hero .reveal').forEach(el => {
       el.classList.add('visible');
