@@ -35,6 +35,11 @@ body {
   overflow-x: hidden;
 }
 
+#preview,
+#cta-form {
+  scroll-margin-top: 84px;
+}
+
 /* ── UTILS ── */
 .mono { font-family: 'DM Mono', monospace; }
 .serif { font-family: 'Noto Serif KR', serif; }
@@ -387,13 +392,13 @@ nav {
 
 .what-desc {
   font-size: 14px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.58);
   line-height: 1.85;
 }
 
 .report-sections-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.08);
@@ -470,7 +475,7 @@ nav {
 
 .preview-copy p {
   font-size: 14px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.58);
   line-height: 1.85;
   margin-bottom: 32px;
 }
@@ -835,7 +840,7 @@ nav {
 
 .cta-sub {
   font-size: 14px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.56);
   line-height: 1.8;
   margin-bottom: 48px;
 }
@@ -962,7 +967,7 @@ nav {
   margin-top: 14px;
   font-family: 'DM Mono', monospace;
   font-size: 10px;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.36);
   text-align: center;
   letter-spacing: 0.3px;
 }
@@ -987,7 +992,7 @@ nav {
 }
 .quick-help {
   font-size: 12px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.62);
   line-height: 1.7;
   margin-bottom: 12px;
 }
@@ -1009,15 +1014,58 @@ nav {
   margin-right: 10px;
   cursor: pointer;
 }
+.quick-turnstile-wrap {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.quick-turnstile-box {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+}
+.quick-turnstile-note {
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.58);
+  line-height: 1.5;
+}
 .quick-status {
   margin-top: 12px;
   min-height: 18px;
   font-size: 12px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.66);
 }
 .quick-status.success { color: #8dd7b1; }
 .quick-status.error { color: #ff9f95; }
 .quick-status.pending { color: #e9cf7a; }
+.quick-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.quick-action-btn {
+  border: none;
+  background: var(--red);
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+.quick-action-btn:hover {
+  background: #a82e22;
+}
+.quick-action-btn.secondary {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.28);
+  color: rgba(255,255,255,0.86);
+}
+.quick-action-btn.secondary:hover {
+  border-color: rgba(255,255,255,0.48);
+  background: rgba(255,255,255,0.06);
+}
 .quick-report {
   position: fixed;
   inset: 0;
@@ -1134,7 +1182,7 @@ nav {
 }
 .detail-stage-sub {
   font-size: 12px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.6);
   margin-bottom: 14px;
 }
 .detail-stage-hint {
@@ -1143,7 +1191,7 @@ nav {
   border: 1px dashed rgba(255,255,255,0.15);
   background: rgba(255,255,255,0.015);
   font-size: 12px;
-  color: rgba(255,255,255,0.42);
+  color: rgba(255,255,255,0.58);
 }
 .tally-inline-wrap {
   border: 1px solid rgba(255,255,255,0.09);
@@ -1152,7 +1200,7 @@ nav {
 .tally-inline-frame {
   display: block;
   width: 100%;
-  min-height: 760px;
+  min-height: 620px;
 }
 .tally-direct-link {
   font-family: 'DM Mono', monospace;
@@ -1170,9 +1218,23 @@ nav {
   background: rgba(255,255,255,0.02);
   font-family: 'DM Mono', monospace;
   font-size: 10px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.48);
   line-height: 1.8;
   text-align: center;
+}
+
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.nav-cta:focus-visible,
+.sample-inline-btn:focus-visible,
+.mockup-blur-btn:focus-visible,
+.quick-modal-close:focus-visible,
+.quick-modal-cta:focus-visible,
+.quick-action-btn:focus-visible,
+.form-submit:focus-visible,
+.quick-file-input:focus-visible {
+  outline: 2px solid #f2d57d;
+  outline-offset: 2px;
 }
 
 /* ════════════════════════════
@@ -1231,17 +1293,30 @@ footer {
   .form-group.full { grid-column: span 1; }
   .form-checkbox-group { grid-template-columns: repeat(2, 1fr); }
   footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
-  .cta-form { padding: 24px; }
+  .cta-form { padding: 20px; }
   .scroll-hint { left: 24px; }
   .beta-bar, .testimonial-bar, .why-section { padding-left: 24px; padding-right: 24px; }
   .sample-inline-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
   .footer-center { display: none; }
-  .tally-inline-frame { min-height: 840px; }
+  .tally-inline-frame { min-height: 680px; }
   .quick-check-panel { padding: 14px; }
   .quick-report { padding: 16px; }
   .quick-modal-dialog { max-height: 84vh; padding: 12px; }
   .quick-report-grid { grid-template-columns: 1fr; }
   .detail-stage-head { font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ── 베타 배너 ── */
@@ -1305,7 +1380,7 @@ footer {
   font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
   color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
 }
-.why-text { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.9; }
+.why-text { font-size: 14px; color: rgba(255,255,255,0.58); line-height: 1.9; }
 .why-text strong { color: rgba(255,255,255,0.72); font-weight: 500; }
 
 /* ── footer 중앙 정보 ── */
@@ -1339,23 +1414,22 @@ footer {
     확인하세요
   </h1>
   <p class="hero-sub reveal reveal-delay-3">
-    제품 정보를 입력하면 현지 시장 온도, 규제·관세, 경쟁 포지션, 타당성 판정까지
-    전문가급 리포트를 5분 안에 이메일로 받아볼 수 있습니다. 무료입니다.
+    제품 소개 PDF 하나면 충분합니다. 이메일 없이 즉시, AI가 베트남 현지 시장 기준으로
+    적합도·규제·경쟁 포지션을 30초 안에 진단합니다.
   </p>
   <div class="hero-actions reveal reveal-delay-4">
     <a href="#cta-form" class="btn-primary js-open-tally">
-      무료 리포트 받기
+      베트남 적합도 바로 확인하기
       <span>→</span>
     </a>
     <a href="#preview" class="btn-ghost">샘플 리포트 미리보기</a>
   </div>
   <div class="hero-timer reveal reveal-delay-4">
     <div class="timer-dot"></div>
-    입력 후 평균 5분 이내 이메일 수신 · 완전 무료
+    PDF 업로드 즉시 결과 확인 · 이메일 불필요
   </div>
   <div class="scroll-hint">
     <div class="scroll-line"></div>
-    Scroll
   </div>
 </section>
 
@@ -1371,19 +1445,19 @@ footer {
     </div>
     <ul class="pain-list">
       <li class="reveal reveal-delay-1">
-        <span class="pain-icon">📋</span>
+        <span class="pain-icon">—</span>
         <span>컨설팅 비용은 부담스럽고, 인터넷 검색으로 나오는 정보는 너무 단편적입니다.</span>
       </li>
       <li class="reveal reveal-delay-2">
-        <span class="pain-icon">🔍</span>
+        <span class="pain-icon">—</span>
         <span>관세율, DAV 등록, 현지 가격대를 각각 따로 찾아야 해서 시간이 너무 오래 걸립니다.</span>
       </li>
       <li class="reveal reveal-delay-3">
-        <span class="pain-icon">📊</span>
+        <span class="pain-icon">—</span>
         <span>시장 조사를 해도 우리 제품이 이 시장에서 통할지 판단하기가 어렵습니다.</span>
       </li>
       <li class="reveal reveal-delay-4">
-        <span class="pain-icon">⚠️</span>
+        <span class="pain-icon">—</span>
         <span>진출 후 예상 못한 인허가 문제나 규제로 발목이 잡히는 사례를 주변에서 봤습니다.</span>
       </li>
     </ul>
@@ -1395,11 +1469,11 @@ footer {
   <div class="section-label">What You Get</div>
   <div class="what-header">
     <h2 class="what-headline reveal">
-      한 번의 입력으로<br>다섯 가지 전문가 분석을<br>한 번에 받습니다
+      1단계 즉시 진단 →<br>2단계 전문 리포트<br>6개 섹션 완전 분석
     </h2>
     <p class="what-desc reveal reveal-delay-2">
-      단순한 정보 요약이 아닙니다. 실무 컨설턴트 관점에서 데이터를 해석하고,
-      지금 당장 실행 가능한 처방으로 마무리합니다.
+      1단계: PDF 업로드만으로 강점·약점·기회·리스크를 즉시 확인합니다.<br>
+      2단계: 추가 정보 입력 후 실무 컨설턴트 수준의 6개 섹션 심층 리포트를 받습니다.
       모든 분석은 공개 데이터 출처와 함께 제공됩니다.
     </p>
   </div>
@@ -1424,15 +1498,21 @@ footer {
     </div>
     <div class="report-section-card">
       <div class="rsc-num">04</div>
-      <div class="rsc-title">AI 타당성 판정</div>
-      <div class="rsc-desc">데이터 기반 Go/No-Go 판정 + 핵심 리스크·기회 각 1개</div>
-      <span class="rsc-tag">Go · No-Go</span>
+      <div class="rsc-title">리스크 vs 기회</div>
+      <div class="rsc-desc">데이터 기반 Go/No-Go 판정 + 핵심 리스크·기회 심층 비교</div>
+      <span class="rsc-tag">Risk · Opportunity</span>
     </div>
     <div class="report-section-card" style="background:#1a1612;">
       <div class="rsc-num" style="color:var(--gold);">05</div>
       <div class="rsc-title">전문가 처방</div>
       <div class="rsc-desc">긴급도·중요도별 액션 카드 6개. 지금 당장 무엇부터 해야 하는지</div>
       <span class="rsc-tag" style="background:rgba(184,150,12,0.1); color:var(--gold);">Next Action</span>
+    </div>
+    <div class="report-section-card" style="background:#1a1612;">
+      <div class="rsc-num" style="color:var(--gold);">06</div>
+      <div class="rsc-title">전문가 시뮬레이션</div>
+      <div class="rsc-desc">내가 직접 판다면 — 전문가 관점의 실전 진출 시나리오</div>
+      <span class="rsc-tag" style="background:rgba(184,150,12,0.1); color:var(--gold);">Expert Simulation</span>
     </div>
   </div>
 </section>
@@ -1455,7 +1535,7 @@ footer {
         <span class="preview-badge">의류·섬유</span>
         <span class="preview-badge">산업재·부품</span>
       </div>
-      <a href="vcheck_sample_report_dark.html" target="_blank" class="btn-primary">
+      <a href="/vcheck_sample_report_dark.html" target="_blank" class="btn-primary">
         샘플 리포트 전체 보기 →
       </a>
       <div class="sample-inline-cta">
@@ -1472,7 +1552,7 @@ footer {
             <div class="mockup-mark">VC</div>
             <div class="mockup-brand-name">V-CHECK AI</div>
           </div>
-          <div class="mockup-meta">VCR-2025-0041</div>
+          <div class="mockup-meta">VCR-2026-0041</div>
         </div>
         <div class="mockup-body">
           <div class="mockup-title">베트남 진출 타당성 진단<br>— 기능성 선크림 (SPF50+)</div>
@@ -1531,7 +1611,7 @@ footer {
       </div>
       <div class="mockup-blur">
         <div class="mockup-blur-text">전체 내용 보기</div>
-        <a href="vcheck_sample_report_dark.html" target="_blank" class="mockup-blur-btn">샘플 리포트 열기 →</a>
+        <a href="/vcheck_sample_report_dark.html" target="_blank" class="mockup-blur-btn">샘플 리포트 열기 →</a>
       </div>
     </div>
 
@@ -1541,37 +1621,27 @@ footer {
 <!-- ══ HOW IT WORKS ══ -->
 <section class="how-section">
   <div class="section-label">How It Works</div>
-  <h2 class="reveal" style="font-family:'Noto Serif KR',serif; font-size:clamp(22px,3vw,34px); font-weight:700; color:white; margin-top:16px;">3단계, 5분이면 충분합니다</h2>
+  <h2 class="reveal" style="font-family:'Noto Serif KR',serif; font-size:clamp(22px,3vw,34px); font-weight:700; color:white; margin-top:16px;">2단계, 이메일 없이 시작합니다</h2>
   <div class="how-steps">
     <div class="how-step reveal">
       <div class="step-num">01</div>
-      <span class="step-icon">📝</span>
-      <div class="step-title">제품 정보 입력</div>
+      <span class="step-icon" style="font-size:22px; display:block; margin-bottom:14px;">↑</span>
+      <div class="step-title">PDF 업로드 → 즉시 결과 확인</div>
       <div class="step-desc">
-        카테고리, 제품명, 목표 채널, 우려 사항을 선택합니다.
-        제품 브로슈어나 URL이 있으면 첨부하면 더 정밀한 분석이 가능합니다.
+        제품 소개 PDF 하나를 업로드하면 AI가 30초 안에 베트남 시장 기준
+        강점·약점·기회·리스크를 팝업으로 보여줍니다. 이메일 입력 없이 즉시 확인 가능합니다.
       </div>
-      <div class="step-time">약 2분 소요</div>
+      <div class="step-time">약 30초 소요</div>
     </div>
     <div class="how-step reveal reveal-delay-2">
       <div class="step-num">02</div>
-      <span class="step-icon">⚙️</span>
-      <div class="step-title">AI 실시간 분석</div>
+      <span class="step-icon" style="font-size:22px; display:block; margin-bottom:14px;">≡</span>
+      <div class="step-title">추가 정보 입력 → 심층 리포트 수신</div>
       <div class="step-desc">
-        입력 즉시 베트남 현지 시장 데이터를 수집하고,
-        인사·세무·법률 관점의 전문가급 분석을 자동으로 생성합니다.
+        1단계 결과를 확인한 후, 회사명·이메일·목표 채널 등을 입력하면
+        6개 섹션 전문가급 리포트를 이메일로 받을 수 있습니다.
       </div>
-      <div class="step-time">약 3분 소요</div>
-    </div>
-    <div class="how-step reveal reveal-delay-3">
-      <div class="step-num">03</div>
-      <span class="step-icon">📩</span>
-      <div class="step-title">이메일로 수신</div>
-      <div class="step-desc">
-        입력하신 이메일로 PDF 형식의 리포트가 발송됩니다.
-        리포트 내 상담 신청 링크를 통해 전문가 미팅을 예약할 수 있습니다.
-      </div>
-      <div class="step-time">입력 후 평균 5분 이내</div>
+      <div class="step-time">약 5분 이내 이메일 수신</div>
     </div>
   </div>
 </section>
@@ -1610,34 +1680,43 @@ footer {
   <div class="cta-inner">
     <p class="cta-eyebrow reveal">Free Report</p>
     <h2 class="cta-headline reveal reveal-delay-1">
-      지금 바로<br>무료 진단을 받아보세요
+      PDF 하나로<br>30초 무료 진단 시작
     </h2>
     <p class="cta-sub reveal reveal-delay-2">
-      입력 후 5분 이내, 전문가급 베트남 진출 타당성 리포트를 이메일로 받아볼 수 있습니다.
+      이메일 없이 PDF만 올리면 AI가 즉시 베트남 적합도를 판정합니다.
+      결과 확인 후 원하시면 2단계 심층 리포트로 이어집니다.
     </p>
 
     <div class="cta-form reveal reveal-delay-3">
       <div class="quick-check-panel" id="quickCheckPanel">
         <label class="quick-label" for="productPdfInput">제품소개 PDF 업로드</label>
         <p class="quick-help">
-          이메일 없이 PDF만 먼저 업로드하면, AI가 베트남 시장 기준 강점/약점을 간략 분석합니다.
+          PDF를 올리면 AI가 30초 안에 베트남 적합도를 판정합니다. 이메일 입력 불필요.
         </p>
         <input
           id="productPdfInput"
           class="quick-file-input"
           type="file"
           accept="application/pdf,.pdf" />
+        <div class="quick-turnstile-wrap" id="quickTurnstileWrap">
+          <div id="quickTurnstile" class="quick-turnstile-box"></div>
+          <p class="quick-turnstile-note">스팸 방지를 위해 보안 검증 후 분석이 시작됩니다.</p>
+        </div>
         <button type="button" class="form-submit" id="quickCheckSubmitBtn">
-          PDF 기반 간략 분석 시작
+          베트남 적합도 바로 확인하기
           <span>→</span>
         </button>
         <div id="quickCheckStatus" class="quick-status" aria-live="polite"></div>
+        <div id="quickActions" class="quick-actions" hidden>
+          <button type="button" id="quickRetryBtn" class="quick-action-btn">다시 시도</button>
+          <button type="button" id="quickContactBtn" class="quick-action-btn secondary">문의 요청</button>
+        </div>
       </div>
 
       <div class="quick-report" id="quickReport" hidden>
         <div class="quick-modal-dialog" role="dialog" aria-modal="true" aria-label="PDF 빠른 분석 결과">
           <div class="quick-modal-top">
-            <div class="quick-report-head">AI 간략 리포트 (초안)</div>
+            <div class="quick-report-head">AI 간략 분석 결과</div>
             <button type="button" id="quickReportCloseBtn" class="quick-modal-close">닫기</button>
           </div>
           <div class="quick-report-grid">
@@ -1697,7 +1776,7 @@ footer {
       </div>
 
       <div id="detailStageHint" class="detail-stage-hint">
-        PDF 분석을 완료하면 2단계 상세 입력 폼이 열립니다.
+        1단계 분석을 완료하면 2단계 상세 리포트 신청 폼이 열립니다.
       </div>
 
       <p class="form-footer-note">
@@ -1719,12 +1798,13 @@ footer {
   </div>
   <div class="footer-center">
     <div class="footer-company">비비데(VBD) · 베트남 비즈니스 인텔리전스</div>
-    <div class="footer-contact">문의 · <a href="mailto:hello@vbd.kr" style="color:rgba(255,255,255,0.35); text-decoration:underline; text-underline-offset:2px;">hello@vbd.kr</a></div>
+    <div class="footer-contact">문의는 서비스 내 문의 요청 버튼으로 접수됩니다.</div>
   </div>
-  <div class="footer-note">© 2025 V-Check AI · 본 서비스는 AI 분석 기반 참고 자료를 제공합니다</div>
+  <div class="footer-note">© 2026 V-Check AI · 본 서비스는 AI 분석 기반 참고 자료를 제공합니다</div>
 </footer>
 
 <script async src="https://tally.so/widgets/embed.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script>
   const TALLY_CONFIG = {
     formId: "lbAx2V",
@@ -1732,24 +1812,47 @@ footer {
     fallbackUrl: "https://tally.so/r/lbAx2V",
   };
   const QUICK_CHECK_CONFIG = {
-    // n8n 신규 워크플로 endpoint를 입력하세요. 예: https://<n8n-domain>/webhook/<workflow-id>/pdfquick/v1
-    webhookUrl: "",
+    // n8n 빠른 분석 endpoint
+    webhookUrl: "https://seoulair.onrender.com/webhook/ak2fngxYlyyUrD48/pdfquickwebhook/pdfquick/v1",
     requestTimeoutMs: 120000,
     maxFileSizeMb: 100,
+    turnstileSiteKey: "1x00000000000000000000AA",
+    turnstileRequired: true,
+  };
+  const CONTACT_CONFIG = {
+    // n8n 문의 webhook endpoint
+    webhookUrl: "https://seoulair.onrender.com/webhook/VVQZcqyAyOBvubXl/contactwebhook/contact/v1",
+    webhookPath: "/webhook/VVQZcqyAyOBvubXl/contactwebhook/contact/v1",
+    requestTimeoutMs: 12000,
   };
   const STEP_TEXT = {
-    pending: "PDF를 분석 중입니다. 잠시만 기다려 주세요.",
+    pending: "PDF를 분석 중입니다. 보통 20~60초 내 결과가 도착합니다.",
     success: "간략 분석이 완료되었습니다. 팝업 결과를 확인해 주세요.",
-    fallback: "빠른 분석 서버가 아직 연결되지 않아 2단계 폼으로 바로 안내합니다.",
+    fallback: "현재 빠른 분석 연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.",
+    delayed: "현재 분석 요청이 지연되고 있습니다. 다시 시도하거나 문의 요청을 남겨주세요.",
   };
+  const USER_FAILURE_STATUS = new Set([400, 401]);
+  const PRECHECK_STATE = Object.freeze({
+    idle: "idle",
+    pending: "pending",
+    success: "success",
+    failUser: "fail_user",
+    failSystem: "fail_system",
+  });
 
   let currentSubmissionId = "";
   let currentPdfName = "";
+  let currentQuickState = PRECHECK_STATE.idle;
+  let currentPrecheckStatus = "pending";
+  let currentPrecheckErrorType = "none";
+  let currentPrecheckErrorCode = "";
+  let currentPrecheckMessage = "";
+  let lastFocusedElement = null;
 
   function getTrackingFields() {
     const params = new URLSearchParams(window.location.search || "");
     return {
-      source: "vcheck_landing_v4",
+      source: "vcheck_landing_v5",
       page_url: window.location.href,
       referrer: document.referrer || "direct",
       utm_source: params.get("utm_source") || "",
@@ -1758,6 +1861,48 @@ footer {
       utm_content: params.get("utm_content") || "",
       utm_term: params.get("utm_term") || "",
     };
+  }
+
+  function initTurnstileWidget() {
+    if (!QUICK_CHECK_CONFIG.turnstileRequired) return;
+    const slot = document.getElementById("quickTurnstile");
+    if (!slot || !window.turnstile || typeof window.turnstile.render !== "function") return;
+    if (slot.dataset.widgetId) return;
+    try {
+      const widgetId = window.turnstile.render("#quickTurnstile", {
+        sitekey: QUICK_CHECK_CONFIG.turnstileSiteKey,
+        theme: "dark",
+      });
+      slot.dataset.widgetId = String(widgetId);
+    } catch (error) {
+      setQuickStatus("error", `보안 위젯 초기화 실패: ${error.message || "unknown"}`);
+    }
+  }
+
+  function getTurnstileToken() {
+    if (!QUICK_CHECK_CONFIG.turnstileRequired) return "";
+    const slot = document.getElementById("quickTurnstile");
+    if (!slot || !window.turnstile || typeof window.turnstile.getResponse !== "function") return "";
+    const widgetId = slot.dataset.widgetId;
+    if (!widgetId) return "";
+    try {
+      return window.turnstile.getResponse(widgetId) || "";
+    } catch {
+      return "";
+    }
+  }
+
+  function resetTurnstileToken() {
+    if (!QUICK_CHECK_CONFIG.turnstileRequired) return;
+    const slot = document.getElementById("quickTurnstile");
+    if (!slot || !window.turnstile || typeof window.turnstile.reset !== "function") return;
+    const widgetId = slot.dataset.widgetId;
+    if (!widgetId) return;
+    try {
+      window.turnstile.reset(widgetId);
+    } catch {
+      // no-op
+    }
   }
 
   function generateSubmissionId() {
@@ -1819,9 +1964,12 @@ footer {
 
   function openQuickReportModal() {
     const box = document.getElementById("quickReport");
+    const closeBtn = document.getElementById("quickReportCloseBtn");
     if (!box) return;
+    lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     box.hidden = false;
     document.body.style.overflow = "hidden";
+    if (closeBtn) closeBtn.focus();
   }
 
   function closeQuickReportModal({ revealDetail = true, scrollToDetail = false } = {}) {
@@ -1830,6 +1978,9 @@ footer {
       box.hidden = true;
     }
     document.body.style.overflow = "";
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus();
+    }
     if (revealDetail) {
       revealDetailStage(scrollToDetail);
     }
@@ -1840,6 +1991,171 @@ footer {
     if (!el) return;
     el.className = `quick-status ${type}`;
     el.textContent = message;
+  }
+
+  function setQuickState(state) {
+    currentQuickState = state;
+  }
+
+  function setPrecheckMeta({
+    status = "pending",
+    errorType = "none",
+    errorCode = "",
+    message = "",
+  } = {}) {
+    currentPrecheckStatus = status;
+    currentPrecheckErrorType = errorType;
+    currentPrecheckErrorCode = errorCode;
+    currentPrecheckMessage = message;
+  }
+
+  function showQuickActions({ showRetry = true, showContact = true } = {}) {
+    const wrap = document.getElementById("quickActions");
+    const retryBtn = document.getElementById("quickRetryBtn");
+    const contactBtn = document.getElementById("quickContactBtn");
+    if (!wrap || !retryBtn || !contactBtn) return;
+    retryBtn.hidden = !showRetry;
+    contactBtn.hidden = !showContact;
+    wrap.hidden = !(showRetry || showContact);
+  }
+
+  function clearQuickActions() {
+    const wrap = document.getElementById("quickActions");
+    const retryBtn = document.getElementById("quickRetryBtn");
+    const contactBtn = document.getElementById("quickContactBtn");
+    if (wrap) wrap.hidden = true;
+    if (retryBtn) {
+      retryBtn.disabled = false;
+      retryBtn.hidden = false;
+    }
+    if (contactBtn) {
+      contactBtn.disabled = false;
+      contactBtn.hidden = false;
+      contactBtn.textContent = "문의 요청";
+    }
+  }
+
+  function scrollToElementWithOffset(target) {
+    if (!target) return;
+    const nav = document.querySelector("nav");
+    const navOffset = nav ? nav.offsetHeight + 16 : 76;
+    const y = target.getBoundingClientRect().top + window.scrollY - navOffset;
+    window.scrollTo({
+      top: Math.max(y, 0),
+      behavior: "smooth",
+    });
+  }
+
+  function trapQuickModalFocus(event) {
+    if (event.key !== "Tab") return;
+    const quickReport = document.getElementById("quickReport");
+    if (!quickReport || quickReport.hidden) return;
+    const focusable = quickReport.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+      return;
+    }
+    if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  function handleQuickFailure({
+    type = "system",
+    message = "요청 처리에 실패했습니다.",
+    code = "UNKNOWN",
+    statusCode = "",
+  } = {}) {
+    const isUser = type === "user";
+    setQuickState(isUser ? PRECHECK_STATE.failUser : PRECHECK_STATE.failSystem);
+    setQuickStatus(isUser ? "error" : "pending", message);
+    setPrecheckMeta({
+      status: isUser ? "blocked_user_error" : "blocked_system_error",
+      errorType: isUser ? "user" : "system",
+      errorCode: statusCode ? `${code}_${statusCode}` : code,
+      message,
+    });
+    hideDetailStage();
+    showQuickActions({ showRetry: true, showContact: true });
+  }
+
+  async function submitContactRequest() {
+    const contactBtn = document.getElementById("quickContactBtn");
+    let endpoint = CONTACT_CONFIG.webhookUrl || "";
+    if (!endpoint.startsWith("https://")) {
+      const quickEndpoint = QUICK_CHECK_CONFIG.webhookUrl || "";
+      if (quickEndpoint.startsWith("https://")) {
+        try {
+          endpoint = new URL(CONTACT_CONFIG.webhookPath || "", new URL(quickEndpoint).origin).toString();
+        } catch {
+          endpoint = "";
+        }
+      }
+    }
+    if (!endpoint.startsWith("https://")) {
+      setQuickStatus("error", "문의 요청 채널이 아직 준비되지 않았습니다. 잠시 후 다시 시도해 주세요.");
+      return;
+    }
+
+    if (!currentSubmissionId) {
+      currentSubmissionId = generateSubmissionId();
+    }
+
+    if (contactBtn) {
+      contactBtn.disabled = true;
+      contactBtn.textContent = "문의 요청 전송 중...";
+    }
+
+    const payload = {
+      submission_id: currentSubmissionId,
+      error_type: currentPrecheckErrorType || "system",
+      error_code: currentPrecheckErrorCode || "UNKNOWN",
+      error_message: currentPrecheckMessage || "빠른 분석 요청 실패",
+      pdf_filename: currentPdfName || "",
+      user_note: "",
+      user_agent: navigator.userAgent || "",
+      timestamp: new Date().toISOString(),
+      ...getTrackingFields(),
+    };
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), CONTACT_CONFIG.requestTimeoutMs);
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || `HTTP ${response.status}`);
+      }
+      setQuickStatus("success", "문의 요청이 접수되었습니다. 확인 후 별도로 안내드리겠습니다.");
+      showQuickActions({ showRetry: true, showContact: false });
+    } catch (error) {
+      const message =
+        error && error.name === "AbortError"
+          ? "문의 요청 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요."
+          : "문의 요청 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.";
+      setQuickStatus("error", message);
+      showQuickActions({ showRetry: true, showContact: true });
+    } finally {
+      clearTimeout(timer);
+      if (contactBtn) {
+        contactBtn.disabled = false;
+        contactBtn.textContent = "문의 요청";
+      }
+    }
   }
 
   function buildTallyUrl(baseUrl, extraFields = {}) {
@@ -1881,7 +2197,10 @@ footer {
 
     const extra = {
       submission_id: currentSubmissionId || generateSubmissionId(),
-      precheck_status: currentSubmissionId ? "done" : "skipped",
+      precheck_status: currentPrecheckStatus || "pending",
+      precheck_error_type: currentPrecheckErrorType || "none",
+      precheck_error_code: currentPrecheckErrorCode || "",
+      precheck_message: currentPrecheckMessage || "",
       pdf_filename: currentPdfName || "",
     };
     directLink.href = getTallyDirectUrl(extra);
@@ -1893,12 +2212,19 @@ footer {
     detailStage.hidden = false;
     if (hint) hint.hidden = true;
     if (scrollToStage) {
-      detailStage.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToElementWithOffset(detailStage);
     }
 
     if (window.Tally && typeof window.Tally.loadEmbeds === "function") {
       window.Tally.loadEmbeds();
     }
+  }
+
+  function hideDetailStage() {
+    const detailStage = document.getElementById("detailStage");
+    const hint = document.getElementById("detailStageHint");
+    if (detailStage) detailStage.hidden = true;
+    if (hint) hint.hidden = false;
   }
 
   // 스크롤 리빌 애니메이션
@@ -1915,6 +2241,10 @@ footer {
 
   // 히어로 진입 즉시 애니메이션
   document.addEventListener('DOMContentLoaded', () => {
+    initTurnstileWidget();
+    setTimeout(initTurnstileWidget, 600);
+    setTimeout(initTurnstileWidget, 1400);
+
     document.querySelectorAll('.hero .reveal').forEach(el => {
       el.classList.add('visible');
     });
@@ -1924,13 +2254,15 @@ footer {
       el.addEventListener("click", (event) => {
         if (!ctaSection) return;
         event.preventDefault();
-        ctaSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToElementWithOffset(ctaSection);
       });
     });
 
     const quickReport = document.getElementById("quickReport");
     const quickReportCloseBtn = document.getElementById("quickReportCloseBtn");
     const quickReportGoDetailBtn = document.getElementById("quickReportGoDetailBtn");
+    const quickRetryBtn = document.getElementById("quickRetryBtn");
+    const quickContactBtn = document.getElementById("quickContactBtn");
 
     if (quickReportCloseBtn) {
       quickReportCloseBtn.addEventListener("click", () => {
@@ -1950,6 +2282,7 @@ footer {
       });
     }
     document.addEventListener("keydown", (event) => {
+      trapQuickModalFocus(event);
       if (event.key === "Escape" && quickReport && !quickReport.hidden) {
         closeQuickReportModal({ revealDetail: true, scrollToDetail: false });
       }
@@ -1959,34 +2292,86 @@ footer {
     const submitBtn = document.getElementById("quickCheckSubmitBtn");
     if (!fileInput || !submitBtn) return;
 
+    if (quickRetryBtn) {
+      quickRetryBtn.addEventListener("click", () => {
+        clearQuickActions();
+        setQuickState(PRECHECK_STATE.idle);
+        setQuickStatus("", "");
+        fileInput.focus();
+      });
+    }
+    if (quickContactBtn) {
+      quickContactBtn.addEventListener("click", async () => {
+        await submitContactRequest();
+      });
+    }
+
     submitBtn.addEventListener("click", async () => {
+      setQuickState(PRECHECK_STATE.idle);
+      hideDetailStage();
+      clearQuickActions();
+      setPrecheckMeta({
+        status: "pending",
+        errorType: "none",
+        errorCode: "",
+        message: "",
+      });
+
       const file = fileInput.files && fileInput.files[0];
       if (!file) {
-        setQuickStatus("error", "먼저 제품소개 PDF 파일을 선택해 주세요.");
+        handleQuickFailure({
+          type: "user",
+          message: "먼저 제품소개 PDF 파일을 선택해 주세요.",
+          code: "NO_FILE",
+        });
         return;
       }
 
       const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
       if (!isPdf) {
-        setQuickStatus("error", "PDF 파일만 업로드할 수 있습니다.");
+        handleQuickFailure({
+          type: "user",
+          message: "PDF 파일만 업로드할 수 있습니다.",
+          code: "INVALID_FILE_TYPE",
+        });
         return;
       }
 
       const maxBytes = QUICK_CHECK_CONFIG.maxFileSizeMb * 1024 * 1024;
       if (file.size > maxBytes) {
-        setQuickStatus("error", `파일 용량은 ${QUICK_CHECK_CONFIG.maxFileSizeMb}MB 이하만 가능합니다.`);
+        handleQuickFailure({
+          type: "user",
+          message: `파일 용량은 ${QUICK_CHECK_CONFIG.maxFileSizeMb}MB 이하만 가능합니다.`,
+          code: "FILE_TOO_LARGE",
+        });
         return;
       }
 
       currentSubmissionId = generateSubmissionId();
       currentPdfName = file.name;
+      setQuickState(PRECHECK_STATE.pending);
       setQuickStatus("pending", STEP_TEXT.pending);
       submitBtn.disabled = true;
 
       const webhookUrl = QUICK_CHECK_CONFIG.webhookUrl || "";
       if (!webhookUrl.startsWith("https://")) {
-        setQuickStatus("pending", STEP_TEXT.fallback);
-        revealDetailStage();
+        handleQuickFailure({
+          type: "system",
+          message: STEP_TEXT.fallback,
+          code: "NO_QUICK_ENDPOINT",
+        });
+        submitBtn.disabled = false;
+        return;
+      }
+
+      initTurnstileWidget();
+      const turnstileToken = getTurnstileToken();
+      if (QUICK_CHECK_CONFIG.turnstileRequired && !turnstileToken) {
+        handleQuickFailure({
+          type: "user",
+          message: "보안 검증을 완료한 뒤 다시 시도해 주세요.",
+          code: "TURNSTILE_REQUIRED",
+        });
         submitBtn.disabled = false;
         return;
       }
@@ -1994,6 +2379,7 @@ footer {
       const formData = new FormData();
       formData.append("product_pdf", file);
       formData.append("submission_id", currentSubmissionId);
+      formData.append("turnstile_token", turnstileToken);
       Object.entries(getTrackingFields()).forEach(([key, value]) => {
         formData.append(key, value || "");
       });
@@ -2017,19 +2403,49 @@ footer {
 
         if (!response.ok) {
           const msg = payload.message || payload.error || `요청 실패 (HTTP ${response.status})`;
-          throw new Error(msg);
+          const statusCode = Number(response.status || 0);
+          resetTurnstileToken();
+          if (USER_FAILURE_STATUS.has(statusCode)) {
+            handleQuickFailure({
+              type: "user",
+              message: msg,
+              code: "HTTP",
+              statusCode,
+            });
+            return;
+          }
+          handleQuickFailure({
+            type: "system",
+            message: `${STEP_TEXT.delayed} (${msg})`,
+            code: "HTTP",
+            statusCode: statusCode || 500,
+          });
+          return;
         }
 
         renderQuickReport(payload);
+        setQuickState(PRECHECK_STATE.success);
         setQuickStatus("success", STEP_TEXT.success);
+        clearQuickActions();
+        setPrecheckMeta({
+          status: "done",
+          errorType: "none",
+          errorCode: "",
+          message: "",
+        });
+        resetTurnstileToken();
         openQuickReportModal();
       } catch (error) {
-        const message =
-          error && error.name === "AbortError"
-            ? "분석 요청 시간이 초과되었습니다. 2단계 폼으로 바로 진행할 수 있습니다."
-            : `빠른 분석 요청에 실패했습니다: ${error.message || "알 수 없는 오류"}`;
-        setQuickStatus("error", message);
-        revealDetailStage();
+        const isTimeout = Boolean(error && error.name === "AbortError");
+        const message = isTimeout
+          ? "분석 요청 시간이 초과되었습니다."
+          : `빠른 분석 요청에 실패했습니다: ${error.message || "알 수 없는 오류"}`;
+        handleQuickFailure({
+          type: "system",
+          message: `${STEP_TEXT.delayed} (${message})`,
+          code: isTimeout ? "TIMEOUT" : "NETWORK_OR_RUNTIME_ERROR",
+        });
+        resetTurnstileToken();
       } finally {
         clearTimeout(timer);
         submitBtn.disabled = false;
